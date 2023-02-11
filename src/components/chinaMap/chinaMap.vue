@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, getCurrentInstance, computed } from 'vue'
+import { inject, onMounted, getCurrentInstance } from 'vue'
 import { china } from '@/js/china'
 let chart = inject('echarts')
 let instance = getCurrentInstance()

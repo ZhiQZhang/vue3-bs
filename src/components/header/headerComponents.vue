@@ -8,12 +8,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const first = ref('首页')
-const detail = ref('详情')
-const my = ref('我的')
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const headerBtnShown = ref(false)
-const biaoqianName = first
+let biaoqianName = ref('首页')
+watch(() => router.currentRoute.value.path, (toPath) => {
+  if (toPath === '/home') {
+    biaoqianName.value = '首页'
+  }
+  if (toPath === '/detail') {
+    biaoqianName.value = '详情'
+  }
+  if (toPath === '/my') {
+    biaoqianName.value = '我的'
+  }
+}, { immediate: true, deep: true })
 </script>
 
 <style lang="scss">

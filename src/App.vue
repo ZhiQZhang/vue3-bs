@@ -18,9 +18,10 @@ provide('echarts', echarts)
 .container{
     width: 100%;
     height: 84%;
-    overflow-x: hidden;
-    overflow-y: scroll;
     background-color: #fff;
     color: #000;
+}
+.van-popup.van-popup--center.van-toast.van-toast--middle.van-toast--loading{
+    height: 15% !important;
 }
 </style>

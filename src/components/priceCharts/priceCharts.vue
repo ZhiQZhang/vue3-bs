@@ -2,17 +2,19 @@
     <div class="priceContainer">
         <div ref="p1" class="p1"></div>
         <div ref="p2" class="p2"></div>
+        <div ref="p3" class="p3"></div>
     </div>
 </template>
 
 <script setup>
 import { onMounted, inject, getCurrentInstance, computed } from 'vue'
-import { getAllAvgPrice, getMaxPrice } from '@/api'
+import { getAllAvgPrice, getMaxPrice, getCityPrice } from '@/api'
 import $bus from '@/utils/bus'
 const chart = inject('echarts')
 const instance = getCurrentInstance()
 let chartData1 = ''
 let chartData2 = ''
+let charts = null
 const makeP1 = () => {
   let charts = chart.init(instance.refs.p1)
   let option = {
@@ -65,6 +67,49 @@ const makeP2 = () => {
     charts.resize()
   })
 }
+const makeP3 = (res) => {
+  let pieData = []
+  for (let i in res.qujian_data) {
+    let obj = {
+      name: i,
+      value: res.qujian_data[i]
+    }
+    pieData.push(obj)
+  }
+  if (charts !== null && charts !== '' && charts !== undefined) {
+    charts.dispose()
+  }
+  charts = chart.init(instance.refs.p3)
+  let option = {
+    title: {
+      text: res.cityname + '市价格区间数据'
+    },
+    series: [
+      {
+        type: 'pie',
+        data: pieData,
+        label: {
+          position: 'center',
+          show: false
+        },
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        labelLine: {
+          show: false
+        },
+        emphasis: {
+          label: {
+            show: true
+          }
+        }
+      }
+    ]
+  }
+  charts.setOption(option)
+  window.addEventListener('resize', () => {
+    charts.resize()
+  })
+}
 const getAvg = () => {
   getAllAvgPrice().then((res) => {
     chartData1 = res.data
@@ -76,6 +121,11 @@ const getMax = () => {
   getMaxPrice().then((res) => {
     chartData2 = res
     makeP2()
+  })
+}
+const cityPrice = (city) => {
+  getCityPrice(city).then((res) => {
+    makeP3(res)
   })
 }
 const data = computed(() => {
@@ -102,9 +152,8 @@ const data2 = computed(() => {
   arr[1] = maxprice
   return arr
 })
-$bus.on('city', (city) => {
-  // 2.11 23:35
-  console.log(city)
+$bus.on('cityPrice', (city) => {
+  cityPrice(city)
 })
 onMounted(() => {
   getAvg()
@@ -122,6 +171,10 @@ onMounted(() => {
     .p2{
         width: 600px;
         height: 200px;
+    }
+    .p3{
+        width: 250px;
+        height: 350px;
     }
 }
 </style>

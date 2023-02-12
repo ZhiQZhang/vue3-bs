@@ -1,6 +1,6 @@
 <template>
     <div class="citySelect">
-        <van-field v-model="fieldValue" is-link readonly label="城市" placeholder="选择城市" @click="show" />
+        <van-field v-model="fieldValue" is-link readonly label="选择城市" placeholder="选择城市" @click="show" />
         <van-popup v-model:show="showPicker" round position="bottom" :style="{ height: '50%' }">
             <van-picker :loading="loading" :columns="cityList" @cancel="showPicker = false" @confirm="onConfirm"/>
         </van-popup>
@@ -9,7 +9,7 @@
 
 <script setup>
 import { getCityList } from '@/api'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import $bus from '@/utils/bus'
 let cityList = []
 let fieldValue = ref('')
@@ -36,6 +36,9 @@ const show = () => {
   showPicker.value = true
   getCity()
 }
+$bus.on('toggleCebianlan', () => {
+  fieldValue.value = ''
+})
 onMounted(() => {
 })
 </script>

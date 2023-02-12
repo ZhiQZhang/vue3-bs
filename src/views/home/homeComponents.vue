@@ -23,17 +23,17 @@ const cityReq = async () => {
     series: [
       {
         type: 'pie',
-        data: cityData
+        data: cityData,
+        radius: ['40%', '60%']
       }
     ],
-    radius: ['20%', '60%'],
     tooltip: {
       show: true,
       trigger: 'item',
       showContent: true,
       triggerOn: 'click',
       backgroundColor: 'white',
-      position: ['50%', '50%'],
+      position: ['40%', '40%'],
       extraCssText: 'width: 71.6px; height:51.6px'
     },
     textStyle: {
@@ -55,6 +55,8 @@ onMounted(() => {
 .homeCom{
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .Pie{
   width: 100%;

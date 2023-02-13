@@ -1,6 +1,6 @@
 <template>
     <div class="floorChartsContainer">
-        <van-button plain hairline type="primary" round size="large" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
+        <van-button class="vbtn" plain hairline type="primary" round size="normal" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
         <div class="floorP1" ref="floorP1"></div>
         <div class="floorP2" ref="floorP2"></div>
     </div>
@@ -108,6 +108,7 @@ $bus.on('cityFloor', (cityName) => {
 .floorChartsContainer{
     width: 100%;
     height: 100%;
+    text-align: center;
     .btnContent{
         display: flex;
         flex-direction: column;
@@ -116,10 +117,12 @@ $bus.on('cityFloor', (cityName) => {
     .floorP1{
         width: 600px;
         height: 300px;
+        margin: 0 auto;
     }
     .floorP2{
         width: 600px;
         height: 300px;
+        margin: 0 auto;
     }
 }
 </style>

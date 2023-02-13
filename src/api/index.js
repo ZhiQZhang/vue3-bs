@@ -93,3 +93,31 @@ export const getFloorData = (city = '') => {
     })
   }
 }
+
+export const getTrafficData = (city = '') => {
+  if (city === '') {
+    return requests({
+      url: '/traffic',
+      method: 'GET'
+    })
+  } else {
+    return requests({
+      url: `/traffic/${city}`,
+      method: 'GET'
+    })
+  }
+}
+
+export const getSquareData = (city = '') => {
+  if (city === '') {
+    return requests({
+      url: '/square',
+      method: 'GET'
+    })
+  } else {
+    return requests({
+      url: `/square/${city}`,
+      method: 'GET'
+    })
+  }
+}

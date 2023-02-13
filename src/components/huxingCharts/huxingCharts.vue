@@ -1,6 +1,6 @@
 <template>
     <div class="huxingChartsContainer">
-        <van-button plain hairline type="primary" round size="large" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
+        <van-button class="vbtn" plain hairline type="primary" round size="normal" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
         <div class="huxingp1" ref="huxingp1"></div>
         <div class="huxingp2" ref="huxingp2"></div>
     </div>
@@ -20,7 +20,8 @@ const makeHuxingP1 = (data) => {
   let myChart = chart.init(instance.refs.huxingp1)
   let option = {
     title: {
-      text: '各户型数量占比'
+      text: '各户型数量占比',
+      left: 'center'
     },
     series: [
       {
@@ -37,8 +38,14 @@ const makeHuxingP1 = (data) => {
       showContent: true,
       triggerOn: 'click',
       backgroundColor: 'white',
-      position: ['90%', '40%'],
+      position: ['70%', '40%'],
       extraCssText: 'width: 111.6px; height:51.6px;'
+    },
+    legend: {
+      type: 'scroll',
+      show: true,
+      orient: 'vertical',
+      right: '1%'
     }
   }
   myChart.setOption(option)
@@ -50,24 +57,29 @@ const makeHuxingP2 = (city, tagArr, dataArr) => {
   charts2 = chart.init(instance.refs.huxingp2)
   let option = {
     title: {
-      text: city + '市各户型数量'
+      text: city + '市各户型数量',
+      left: 'center'
     },
-    xAxis: {},
+    xAxis: {
+      data: tagArr
+    },
     yAxis: {
-      data: tagArr,
-      axisLabel: {
-        inteval: 0,
-        rotate: -60
-      }
     },
     series: [
       {
         type: 'bar',
         data: dataArr,
         label: {
-          position: 'right',
+          position: 'top',
           show: true
         }
+      }
+    ],
+    dataZoom: [
+      {
+        type: 'slider',
+        show: true,
+        fillerColor: '#66B1FF'
       }
     ]
   }
@@ -113,18 +125,21 @@ $bus.on('cityHuxing', (cityName) => {
 .huxingChartsContainer{
     width: 100%;
     height: 100%;
+    text-align: center;
     .btnContent{
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
     .huxingp1{
-        width: 200px;
-        height: 250px;
+        width: 800px;
+        height: 300px;
+        margin: 0 auto;
     }
     .huxingp2{
-        width: 600px;
+        width: 800px;
         height: 100%;
+        margin: 0 auto;
     }
 }
 </style>

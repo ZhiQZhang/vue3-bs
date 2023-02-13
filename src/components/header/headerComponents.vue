@@ -12,16 +12,13 @@ import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const headerBtnShown = ref(false)
-let biaoqianName = ref('首页')
+let biaoqianName = ref('')
 watch(() => router.currentRoute.value.path, (toPath) => {
-  if (toPath === '/home') {
-    biaoqianName.value = '首页'
-  }
   if (toPath === '/detail') {
     biaoqianName.value = '详情'
   }
-  if (toPath === '/my') {
-    biaoqianName.value = '我的'
+  if (toPath === '/login') {
+    biaoqianName.value = '登录'
   }
 }, { immediate: true, deep: true })
 </script>
@@ -35,6 +32,7 @@ watch(() => router.currentRoute.value.path, (toPath) => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-bottom: 1px solid #fff;
   .biaoqian{
     width: 100%;
     height: 50%;

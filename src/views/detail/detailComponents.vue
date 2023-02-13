@@ -8,9 +8,11 @@
             <div class="flexItem" :class="{ 'active': shownObj.floor }">楼层分析</div>
             <div class="flexItem" :class="{ 'active': shownObj.traffic }">交通分析</div>
             <div class="flexItem" :class="{ 'active': shownObj.square }">面积分析</div>
-        </div>
-        <div class="content">
-            <city-select></city-select>
+          </div>
+          <div class="content">
+            <home-components v-show="homeShow"></home-components>
+            <city-drop-components v-show="!homeShow"></city-drop-components>
+            <span class="returnHome" v-show="!homeShow" @click="returnHome">返回首页</span>
             <div class="item" v-show="shownObj.price">
                 <price-charts></price-charts>
             </div>
@@ -26,23 +28,30 @@
             <div class="item" v-show="shownObj.floor">
                 <floor-charts></floor-charts>
             </div>
-            <div class="item" v-show="shownObj.traffic">交通分析</div>
-            <div class="item" v-show="shownObj.square">面积分析</div>
+            <div class="item" v-show="shownObj.traffic">
+                <traffic-charts></traffic-charts>
+            </div>
+            <div class="item" v-show="shownObj.square">
+                <square-charts></square-charts>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import citySelect from '@/components/citySelect/citySelect.vue'
-import { reactive, onMounted, provide } from 'vue'
+import { reactive, provide, ref } from 'vue'
 import priceCharts from '@/components/priceCharts/priceCharts.vue'
 import huxingCharts from '@/components/huxingCharts/huxingCharts'
 import chaoxiangCharts from '@/components/chaoxiangCharts/chaoxiangCharts.vue'
 import houseTypeCharts from '@/components/houseTypeCharts/houseTypeCharts.vue'
 import floorCharts from '@/components/floorCharts/floorCharts.vue'
+import homeComponents from '@/components/home/homeComponents.vue'
+import cityDropComponents from '@/components/cityDrop/cityDropComponents.vue'
+import trafficCharts from '@/components/trafficCharts/trafficCharts'
+import squareCharts from '@/components/squareCharts/squareCharts.vue'
 import $bus from '@/utils/bus'
 const _keys_ = {
-  price: true,
+  price: false,
   huxing: false,
   orientation: false,
   type: false,
@@ -50,9 +59,11 @@ const _keys_ = {
   traffic: false,
   square: false
 }
+const homeShow = ref(true)
 const shownObj = reactive(_keys_)
 provide('cebianShow', shownObj)
 const choose = (event) => {
+  homeShow.value = false
   let obj = {
     价格分析: 'price',
     户型分析: 'huxing',
@@ -86,9 +97,21 @@ $bus.on('cityName', (cityName) => {
   if (shownObj.floor) {
     $bus.emit('cityFloor', cityName)
   }
+  if (shownObj.traffic) {
+    $bus.emit('cityTraffic', cityName)
+  }
+  if (shownObj.square) {
+    $bus.emit('citySquare', cityName)
+  }
 })
-onMounted(() => {
-})
+const returnHome = () => {
+  homeShow.value = true
+  for (let i in shownObj) {
+    if (shownObj[i]) {
+      shownObj[i] = false
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -98,7 +121,7 @@ onMounted(() => {
     display: flex;
     .cebianlan{
         background-color: #66B1FF;
-        width: 22%;
+        width: 15%;
         height: 100%;
         color: #fff;
         display: flex;
@@ -109,27 +132,31 @@ onMounted(() => {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            height: 10%;
         }
         .active{
           background-color: #518bca;
         }
     }
     .content{
-        width: 78%;
+        width: 85%;
         height: 100%;
         display: flex;
         flex-direction: column;
         background-color: #F7F8FA;
+        align-items: center;
+        position: relative;
+        text-align: center;
         .item{
             width: 100%;
-            height: 92%;
-            overflow-x: scroll;
+            height: 100%;
+            overflow-x: hidden;
             overflow-y: scroll;
-            .p1{
-                width: 100%;
-                height: 80px;
-            }
-        }
+            margin: 0 auto;
+          }
+          .returnHome{
+            height: 5%;
+          }
     }
 }
 </style>

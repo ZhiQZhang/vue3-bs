@@ -1,3 +1,4 @@
+import { def } from '@vue/shared'
 import axios from 'axios'
 const requests = axios.create({
   baseURL: '/api',

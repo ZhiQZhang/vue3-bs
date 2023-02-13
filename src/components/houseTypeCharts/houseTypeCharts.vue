@@ -1,6 +1,6 @@
 <template>
     <div class="houseTypeChartsContainer">
-        <van-button plain hairline type="primary" round size="large" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
+        <van-button class="vbtn" plain hairline type="primary" round size="normal" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
         <div class="houseTypeP1" ref="houseTypeP1"></div>
         <div class="houseTypeP2" ref="houseTypeP2"></div>
     </div>
@@ -69,6 +69,12 @@ const makeHTP2 = (city, data) => {
       backgroundColor: 'white',
       position: ['70%', '20%'],
       extraCssText: 'width: 111.6px; height:51.6px;'
+    },
+    legend: {
+      type: 'scroll',
+      show: true,
+      orient: 'vertical',
+      right: '1%'
     }
   }
   charts2.setOption(option)
@@ -113,18 +119,21 @@ $bus.on('cityHouseType', (cityName) => {
 .houseTypeChartsContainer{
     width: 100%;
     height: 100%;
+    text-align: center;
     .btnContent{
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
     .houseTypeP1{
-        width: 300px;
-        height: 250px;
+        width: 600px;
+        height: 400px;
+        margin: 0 auto;
     }
     .houseTypeP2{
-        width: 200px;
-        height: 200px;
+        width: 600px;
+        height: 400px;
+        margin: 0 auto;
     }
 }
 </style>

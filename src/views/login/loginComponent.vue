@@ -1,6 +1,7 @@
 <template>
     <div>
-        这是我的页面
+        这是登录的页面
+        <router-link to="/detail">详情</router-link>
     </div>
 </template>
 

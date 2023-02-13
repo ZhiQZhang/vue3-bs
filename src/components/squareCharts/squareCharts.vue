@@ -1,34 +1,29 @@
 <template>
-    <div class="chaoxiangChartsContainer">
+    <div class="squareChartsContainer">
         <van-button class="vbtn" plain hairline type="primary" round size="normal" @click="loadingData"><div class="btnContent">获取数据</div></van-button>
-        <div ref="orientationP1" class="orientationP1"></div>
-        <div ref="orientationP2" class="orientationP2"></div>
+        <div class="squareP1" ref="squareP1"></div>
+        <div class="squareP2" ref="squareP2"></div>
     </div>
 </template>
 
 <script setup>
-import { getOrientationData } from '@/api'
+import { getSquareData } from '@/api'
 import { getCurrentInstance, inject } from 'vue'
 import $bus from '@/utils/bus'
-import 'vant/es/toast/style'
-import { showLoadingToast, closeToast } from 'vant'
-const echart = inject('echarts')
+const chart = inject('echarts')
 const instance = getCurrentInstance()
 let charts2 = null
-const makeCXP1 = (data) => {
-  let myChart = echart.init(instance.refs.orientationP1)
+const makeSquareP1 = (data) => {
+  let myChart = chart.init(instance.refs.squareP1)
   let option = {
     title: {
-      text: '所有城市房屋朝向占比',
+      text: '房屋面积占比',
       left: 'center'
     },
     series: [
       {
         type: 'pie',
-        data: data,
-        label: {
-          show: false
-        }
+        data: data
       }
     ],
     tooltip: {
@@ -38,7 +33,7 @@ const makeCXP1 = (data) => {
       triggerOn: 'click',
       backgroundColor: 'white',
       position: ['70%', '40%'],
-      extraCssText: 'width: 70.6px; height:50.6px;'
+      extraCssText: 'width: 100.6px; height:50.6px;'
     },
     legend: {
       type: 'scroll',
@@ -52,23 +47,20 @@ const makeCXP1 = (data) => {
     myChart.resize()
   })
 }
-const makeCXP2 = (city, data) => {
+const makeSquareP2 = (cityName, data) => {
   if (charts2 !== null && charts2 !== '' && charts2 !== undefined) {
     charts2.dispose()
   }
-  charts2 = echart.init(instance.refs.orientationP2)
+  charts2 = chart.init(instance.refs.squareP2)
   let option = {
     title: {
-      text: city + '市朝向数据占比',
+      text: cityName + '市房屋面积占比',
       left: 'center'
     },
     series: [
       {
         type: 'pie',
-        data: data,
-        label: {
-          show: false
-        }
+        data: data
       }
     ],
     tooltip: {
@@ -78,7 +70,7 @@ const makeCXP2 = (city, data) => {
       triggerOn: 'click',
       backgroundColor: 'white',
       position: ['70%', '40%'],
-      extraCssText: 'width: 70.6px; height:50.6px;'
+      extraCssText: 'width: 100.6px; height:50.6px;'
     },
     legend: {
       type: 'scroll',
@@ -93,56 +85,48 @@ const makeCXP2 = (city, data) => {
   })
 }
 const loadingData = () => {
-  const toast = showLoadingToast({
-    forbidClick: true,
-    message: '加载中'
-  })
-  getOrientationData().then((res) => {
+  getSquareData().then((res) => {
     let data = []
-    for (let i of res) {
+    for (let i in res) {
       let obj = {
-        name: i.house_orientation,
-        value: i.count
+        name: i,
+        value: res[i]
       }
       data.push(obj)
     }
-    if (res) {
-      makeCXP1(data)
-      closeToast()
-    }
+    makeSquareP1(data)
   })
 }
-$bus.on('cityCX', (city) => {
-  getOrientationData(city).then((res) => {
+$bus.on('citySquare', (city) => {
+  getSquareData(city).then((res) => {
     let data = []
-    for (let i of res.data) {
+    for (let i in res.data) {
       let obj = {
-        name: i.house_orientation,
-        value: i.count
+        name: i,
+        value: res.data[i]
       }
       data.push(obj)
     }
-    makeCXP2(res.city_name, data)
+    makeSquareP2(res.city_name, data)
   })
 })
 </script>
 
 <style lang="scss" scoped>
-.chaoxiangChartsContainer{
+.squareChartsContainer{
     width: 100%;
     height: 100%;
-    text-align: center;
     .btnContent{
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
-    .orientationP1{
+    .squareP1{
         width: 600px;
         height: 400px;
         margin: 0 auto;
     }
-    .orientationP2{
+    .squareP2{
         width: 600px;
         height: 400px;
         margin: 0 auto;

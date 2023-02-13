@@ -14,7 +14,8 @@ const makeMap = () => {
   let options = {
     title: {
       text: '简易中国地图',
-      show: false
+      show: true,
+      left: 'center'
     },
     backgroundColor: '#fff',
     geo: {

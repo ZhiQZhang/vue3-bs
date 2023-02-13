@@ -3,6 +3,7 @@
         <div ref="p1" class="p1"></div>
         <div ref="p2" class="p2"></div>
         <div ref="p3" class="p3"></div>
+        <div ref="p4" class="p4"></div>
     </div>
 </template>
 
@@ -110,6 +111,10 @@ const makeP3 = (res) => {
     charts.resize()
   })
 }
+const makeP4 = () => {
+  // 2.14 0：26准备做实时排序柱状图
+  let cityArr = ['上海', '北京', '南京', '南昌', '天津', '广州', '成都', '杭州', '武汉', '深圳', '重庆']
+}
 const getAvg = () => {
   getAllAvgPrice().then((res) => {
     chartData1 = res.data
@@ -167,14 +172,22 @@ onMounted(() => {
     .p1{
         width: 600px;
         height: 200px;
+        margin: 0 auto;
     }
     .p2{
         width: 600px;
         height: 200px;
+        margin: 0 auto;
     }
     .p3{
         width: 250px;
         height: 350px;
+        margin: 0 auto;
+    }
+    .p4{
+      width: 800px;
+      height: 400px;
+      margin: 0 auto;
     }
 }
 </style>

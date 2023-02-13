@@ -1,5 +1,6 @@
 <template>
     <div class="homeCom">
+        <span>首页</span>
         <china-map></china-map>
         <div ref="pie" class="Pie"></div>
     </div>
@@ -33,7 +34,7 @@ const cityReq = async () => {
       showContent: true,
       triggerOn: 'click',
       backgroundColor: 'white',
-      position: ['40%', '40%'],
+      position: ['50%', '50%'],
       extraCssText: 'width: 71.6px; height:51.6px'
     },
     textStyle: {
@@ -41,10 +42,8 @@ const cityReq = async () => {
       fontStyle: 'oblique'
     }
   }
-  chart.init(instance.refs.pie).setOption(option)
-  window.addEventListener('resize', () => {
-    chart.init(instance.refs.pie).resize()
-  })
+  let myChart = chart.init(instance.refs.pie)
+  myChart.setOption(option)
 }
 onMounted(() => {
   cityReq()
@@ -54,9 +53,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 .homeCom{
     width: 100%;
-    height: 100%;
+    height: 800px;
     overflow-y: scroll;
     overflow-x: hidden;
+    background-color: #fff;
+    text-align: center;
 }
 .Pie{
   width: 100%;

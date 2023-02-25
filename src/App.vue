@@ -16,7 +16,7 @@ provide('echarts', echarts)
 
 <style lang="scss">
 .firstContainer{
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     .container{
     width: 100%;

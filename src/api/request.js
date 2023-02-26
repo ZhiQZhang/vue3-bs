@@ -1,10 +1,12 @@
-import { def } from '@vue/shared'
 import axios from 'axios'
 const requests = axios.create({
   baseURL: '/api',
   timeout: 5000
 })
 requests.interceptors.request.use((config) => {
+  if (localStorage.getItem('bstoken')) {
+    config.headers.Authorization = localStorage.getItem('bstoken')
+  }
   return config
 })
 requests.interceptors.response.use((res) => {

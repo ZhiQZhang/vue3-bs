@@ -121,3 +121,14 @@ export const getSquareData = (city = '') => {
     })
   }
 }
+
+export const loginReq = (username, password) => {
+  return requests({
+    url: '/login',
+    method: 'post',
+    data: {
+      username: username,
+      password: password
+    }
+  })
+}

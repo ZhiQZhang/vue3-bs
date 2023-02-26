@@ -132,3 +132,13 @@ export const loginReq = (username, password) => {
     }
   })
 }
+
+export const checkToken = (token) => {
+  return requests({
+    url: '/checkToken',
+    method: 'post',
+    data: {
+      token: token
+    }
+  })
+}

@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import { loginReq } from '@/api'
-import { ref } from 'vue'
+import { loginReq, checkToken } from '@/api'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 let usn = ref('')
@@ -24,6 +24,15 @@ const login = () => {
     }
   })
 }
+onMounted(() => {
+  if (localStorage.getItem('bstoken')) {
+    checkToken(localStorage.getItem('bstoken')).then((res) => {
+      res.status ? router.push('/detail') : router.push('/login')
+    })
+  } else {
+    router.push('/login')
+  }
+})
 </script>
 
 <style lang="scss" scoped>

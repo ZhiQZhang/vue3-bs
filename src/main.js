@@ -6,7 +6,9 @@ import store from './store'
 import vant from 'vant'
 import 'vant/lib/index.css'
 import * as echarts from 'echarts'
+import message from './js/message'
 
 const app = createApp(App)
 app.config.globalProperties.$echarts = echarts
+app.config.globalProperties.$message = message
 app.use(store).use(router).use(vant).mount('#app')

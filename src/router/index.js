@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { checkToken } from '@/api'
 
 const routes = [
   {
@@ -20,6 +21,22 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from) => {
+  if (to.path === '/detail') {
+    if (localStorage.getItem('bstoken') !== null) {
+      checkToken(localStorage.getItem('bstoken')).then((res) => {
+        if (res.code === 200) {
+          return '/detail'
+        } else {
+          return '/'
+        }
+      })
+    } else {
+      return '/'
+    }
+  }
 })
 
 export default router

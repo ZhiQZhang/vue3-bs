@@ -26,6 +26,8 @@ const login = () => {
       instance.proxy.$message({ text: '登陆成功', type: 'success' })
       localStorage.setItem('bstoken', res.token)
       router.push('/detail')
+    } else {
+      instance.proxy.$message({ text: res.errMsg, type: 'error' })
     }
   })
 }
@@ -40,7 +42,7 @@ onMounted(() => {
       }
     })
   } else {
-    instance.proxy.$message({ text: 'token已失效,请重新登录', type: 'error' })
+    instance.proxy.$message({ text: 'token已失效,请重新登录', type: 'warn' })
     router.push('/login')
   }
 })

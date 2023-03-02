@@ -8,6 +8,7 @@
             <div class="flexItem" :class="{ 'active': shownObj.floor }">楼层分析</div>
             <div class="flexItem" :class="{ 'active': shownObj.traffic }">交通分析</div>
             <div class="flexItem" :class="{ 'active': shownObj.square }">面积分析</div>
+            <div class="flexItem"></div>
           </div>
           <div class="content">
             <home-components v-show="homeShow"></home-components>

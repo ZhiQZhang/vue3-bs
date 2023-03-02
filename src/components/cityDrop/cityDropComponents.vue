@@ -54,12 +54,18 @@ $bus.on('toggleCebianlan', () => {
     width: 30%;
     height: 5%;
     margin-bottom: 5%;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     .selectContainer{
         width: 100%;
         height: 100%;
         border: 1px solid #66B1FF;
         text-align: center;
         position: relative;
+        border-radius: 10px;
         i{
             position: absolute;
             right: 10%;
@@ -69,20 +75,28 @@ $bus.on('toggleCebianlan', () => {
     }
     .drop{
         width: 30%;
-        height: 15%;
-        background-color: #66B1FF;
+        height: 25%;
+        background-color: #fff;
         color: #fff;
         text-align: center;
         position: absolute;
         z-index: 999;
         overflow-y: scroll;
+        top: 10.5%;
+        left: 35%;
         .cityContainer{
             display: flex;
             flex-direction: column;
             p{
+                background-color: #66B1FF;
                 border-bottom: 1px solid #fff;
+                border-top: 1px solid #fff;
+                border-radius: 10px;
             }
         }
+    }
+    .drop::-webkit-scrollbar{
+      width: 0px;
     }
 }
 </style>

@@ -52,7 +52,7 @@ $bus.on('toggleCebianlan', () => {
 <style lang="scss" scoped>
 .cityDropContainer{
     width: 30%;
-    height: 5%;
+    height: 10%;
     margin-bottom: 5%;
     margin-top: 5%;
     display: flex;
@@ -82,7 +82,7 @@ $bus.on('toggleCebianlan', () => {
         position: absolute;
         z-index: 999;
         overflow-y: scroll;
-        top: 10.5%;
+        top: 21%;
         left: 35%;
         .cityContainer{
             display: flex;

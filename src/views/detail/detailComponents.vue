@@ -8,12 +8,12 @@
             <div class="flexItem" :class="{ 'active': shownObj.floor }">楼层分析</div>
             <div class="flexItem" :class="{ 'active': shownObj.traffic }">交通分析</div>
             <div class="flexItem" :class="{ 'active': shownObj.square }">面积分析</div>
-            <div class="flexItem"></div>
+            <div class="flexItem" :class="{ 'active': shownObj.dataDetail }">详细数据</div>
           </div>
           <div class="content">
+            <span class="returnHome" v-if="!homeShow" @click="returnHome">返回首页</span>
             <home-components v-show="homeShow"></home-components>
-            <city-drop-components v-show="!homeShow"></city-drop-components>
-            <span class="returnHome" v-show="!homeShow" @click="returnHome">返回首页</span>
+            <city-drop-components v-show="cityDropShow"></city-drop-components>
             <div class="item" v-show="shownObj.price">
                 <price-charts></price-charts>
             </div>
@@ -35,12 +35,15 @@
             <div class="item" v-show="shownObj.square">
                 <square-charts></square-charts>
             </div>
+            <div class="item" v-show="shownObj.dataDetail">
+              <data-detail></data-detail>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { reactive, provide, ref } from 'vue'
+import { reactive, provide, ref, computed } from 'vue'
 import priceCharts from '@/components/priceCharts/priceCharts.vue'
 import huxingCharts from '@/components/huxingCharts/huxingCharts'
 import chaoxiangCharts from '@/components/chaoxiangCharts/chaoxiangCharts.vue'
@@ -50,6 +53,7 @@ import homeComponents from '@/components/home/homeComponents.vue'
 import cityDropComponents from '@/components/cityDrop/cityDropComponents.vue'
 import trafficCharts from '@/components/trafficCharts/trafficCharts'
 import squareCharts from '@/components/squareCharts/squareCharts.vue'
+import dataDetail from '@/components/dataDetail/dataDetail.vue'
 import $bus from '@/utils/bus'
 const _keys_ = {
   price: false,
@@ -58,7 +62,8 @@ const _keys_ = {
   type: false,
   floor: false,
   traffic: false,
-  square: false
+  square: false,
+  dataDetail: false
 }
 const homeShow = ref(true)
 const shownObj = reactive(_keys_)
@@ -72,7 +77,8 @@ const choose = (event) => {
     类型分析: 'type',
     楼层分析: 'floor',
     交通分析: 'traffic',
-    面积分析: 'square'
+    面积分析: 'square',
+    详细数据: 'dataDetail'
   }
   for (let i in _keys_) {
     if (shownObj[i]) {
@@ -113,6 +119,18 @@ const returnHome = () => {
     }
   }
 }
+// 城市下拉显示
+const cityDropShow = computed(() => {
+  if (homeShow.value) {
+    return false
+  } else {
+    if (shownObj.dataDetail) {
+      return false
+    } else {
+      return true
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -157,6 +175,8 @@ const returnHome = () => {
           }
           .returnHome{
             height: 5%;
+            font-size: 20px;
+            font-weight: bold;
           }
     }
 }

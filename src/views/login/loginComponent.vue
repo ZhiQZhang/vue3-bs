@@ -38,11 +38,12 @@ onMounted(() => {
         instance.proxy.$message({ text: 'token校验成功', type: 'success' })
         router.push('/detail')
       } else {
+        instance.proxy.$message({ text: 'token已过期', type: 'error' })
         router.push('/login')
       }
     })
   } else {
-    instance.proxy.$message({ text: 'token已失效,请重新登录', type: 'warn' })
+    instance.proxy.$message({ text: '未找到token', type: 'warn' })
     router.push('/login')
   }
 })

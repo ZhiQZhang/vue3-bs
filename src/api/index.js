@@ -142,3 +142,25 @@ export const checkToken = (token) => {
     }
   })
 }
+
+export const getPageData = (city, pageConfig) => {
+  if (city === '') {
+    return requests({
+      url: '/getDetailData',
+      method: 'POST',
+      data: {
+        cityname: city,
+        pageData: pageConfig
+      }
+    })
+  } else {
+    return requests({
+      url: '/getDetailData',
+      method: 'POST',
+      data: {
+        cityname: city,
+        pageData: pageConfig
+      }
+    })
+  }
+}

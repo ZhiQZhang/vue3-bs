@@ -1,17 +1,20 @@
 <template>
     <div class="dataDetailContainer">
         <div class="form">
-            <select name="citydata" id="citydata" @change="getDataCity($event)">
+            <select ref="selectCity" name="citydata" id="citydata" @change="getDataCity($event)">
                 <option value="">--请选择城市--</option>
                 <option v-for="(item, index) in city" :key="index" :value="item">{{ item }}</option>
             </select>
             <button class="getData" @click="getData">获取数据</button>
         </div>
-        <table class="dataTable">
+        <div class="dataTable">
+            <table>
             <tr>
-                <th v-for="(item, index) in cols" :key="index">{{ item }}</th>
+                <th v-show="detaildata.length">行号</th>
+                <th v-for="(item, index) in cols" :key="index">{{ colChinese[item] }}</th>
             </tr>
-            <tr v-for="item in detaildata" :key="item.id">
+            <tr v-for="(item, index) in detaildata" :key="item.id">
+                <th v-show="detaildata.length">{{ index + 1 }}</th>
                 <th>{{ item.id }}</th>
                 <th>{{ item.type }}</th>
                 <th>{{ item.title }}</th>
@@ -20,29 +23,48 @@
                 <th>{{ item.orientation }}</th>
                 <th>{{ item.floor }}</th>
                 <th>{{ item.traffic }}</th>
-                <th>{{ item.price }}</th>
+                <th>{{ item.price }}元/月</th>
                 <th>{{ item.get_time }}</th>
                 <th>{{ item.city }}</th>
             </tr>
         </table>
-        <div class="pagination"><span>共{{ totalNum }}条,每页{{ pageData.pageSize }}条,共{{ Math.floor(totalNum / pageData.pageSize) + 1 }}页</span></div>
+        </div>
+        <div class="pagination"><button :class="{ 'disabled': pageIndex === 1 }" @click="getPrevData" :disabled="pageIndex === 1">上一页</button><div>共{{ totalNum }}条,每页{{ pageSize }}条,共{{ Math.ceil(totalNum / pageSize) }}页,当前第{{ pageIndex }}页</div><button :class="{ 'disabled': pageIndex === Math.ceil(totalNum / pageSize) }" @click="getNextData" :disabled="pageIndex === Math.ceil(totalNum / pageSize)">下一页</button></div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, getCurrentInstance } from 'vue'
+import { onMounted, reactive, ref, getCurrentInstance, computed, watch } from 'vue'
 import { getPageData, getCityList } from '@/api'
 const instance = getCurrentInstance()
+let cityname = ref('')
 let city = ref([])
 let cols = ref([])
 let detaildata = ref([])
-let pageData = reactive({
-  pageIndex: 1,
-  pageSize: 50
+let pageIndex = ref(1)
+let pageSize = ref(50)
+const pageData = computed(() => {
+  return {
+    pageIndex: pageIndex.value,
+    pageSize: pageSize.value
+  }
 })
+const colChinese = {
+  id: '房屋id',
+  type: '租赁类型',
+  title: '标题',
+  rooms: '户型',
+  square: '面积',
+  orientation: '朝向',
+  floor: '楼层',
+  traffic: '交通',
+  price: '价格',
+  get_time: '获取时间',
+  city: '所在城市'
+}
 let totalNum = ref(0)
 const getData = () => {
-  getPageData('', pageData).then(res => {
+  getPageData('', pageData.value).then(res => {
     instance.proxy.$message({ text: '数据获取成功', type: 'success' })
     detaildata.value = res.data
     totalNum.value = res.totalNum
@@ -50,11 +72,29 @@ const getData = () => {
   })
 }
 const getDataCity = (event) => {
-  getPageData(event.target.value, pageData).then(res => {
+  pageIndex.value = 1
+  getPageData(event.target.value, pageData.value).then(res => {
     instance.proxy.$message({ text: '数据获取成功', type: 'success' })
     detaildata.value = res.data
     totalNum.value = res.totalNum
     cols.value = Object.keys(detaildata.value[0])
+    cityname.value = event.target.value
+  })
+}
+// 获取上一页数据
+const getPrevData = () => {
+  pageIndex.value -= 1
+  getPageData(cityname.value, pageData.value).then(res => {
+    instance.proxy.$message({ text: '数据获取成功', type: 'success' })
+    detaildata.value = res.data
+  })
+}
+// 获取下一页数据
+const getNextData = () => {
+  pageIndex.value += 1
+  getPageData(cityname.value, pageData.value).then(res => {
+    instance.proxy.$message({ text: '数据获取成功', type: 'success' })
+    detaildata.value = res.data
   })
 }
 onMounted(() => {
@@ -90,26 +130,61 @@ onMounted(() => {
         }
     }
     .dataTable{
-        width: 95%;
-        height: 100%;
-        background-color: #66B1FF;
-        margin: 10px auto;
+        border-radius: 10px;
+        width: 100%;
+        height: 65%;
         overflow-y: scroll;
-        overflow-x: scroll;
+        tr:first-of-type{
+            position: sticky;
+            top: 0;
+            background-color: #66B1FF;
+            color: #fff;
+        }
         tr{
             width: 100%;
             height: 50px;
             th{
                 width: 7%;
                 height: 50px;
-                border: 1px solid grey;
+                border-bottom: 1px solid grey;
+                border-right: 1px solid grey;
+                font-size: 13px;
+                font-weight: 100;
             }
+        }
+        tr:nth-child(odd){
+            background-color: #66B1FF;
+            color: #fff;
         }
     }
     .pagination{
-        height: 10%;
+        height: 11%;
         width: 70%;
         margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        button{
+            width: 10%;
+            height: 50%;
+            color: #fff;
+            background-color: #66B1FF;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        div{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .disabled{
+            cursor: not-allowed;
+            background-color: #1e4f84;
+        }
     }
 }
 </style>

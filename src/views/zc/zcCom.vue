@@ -1,84 +1,54 @@
 <template>
-    <div class="loginContainer">
-        <p>欢迎使用租房数据可视化平台</p>
+    <div class="zcContainer">
         <div class="form">
-          <p style="height: 5%;">请登录</p>
+          <p style="height: 5%;">请注册</p>
           <input v-model="usn" :class="[usn !== '' ? 'act' : '' ]" type="text" name="usn" id="usn">
           <label for="usn" :class="[ usn !== '' ? 'active' : '' ]">用户名</label>
           <input type="password" v-model="pwd" :class="[pwd !== '' ? 'act' : '' ]" name="pwd" id="pwd">
           <label for="pwd" :class="[ pwd !== '' ? 'active' : '' ]">密码</label>
-          <button @click="login">登录</button>
+          <button @click="zc">注册</button>
         </div>
     </div>
 </template>
 
 <script setup>
-import { loginReq, checkToken } from '@/api'
-import { ref, onMounted, getCurrentInstance } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
+import { zcReq } from '@/api'
+const usn = ref('')
+const pwd = ref('')
 const router = useRouter()
-let usn = ref('')
-let pwd = ref('')
 const instance = getCurrentInstance()
-const login = () => {
-  loginReq(usn.value, pwd.value).then((res) => {
+const zc = () => {
+  zcReq(usn.value, pwd.value).then(res => {
     if (res.code === 200) {
-      instance.proxy.$message({ text: '登陆成功', type: 'success' })
-      localStorage.setItem('bstoken', res.token)
-      router.push('/detail')
+      instance.proxy.$message({ text: res.Msg, type: 'success' })
+      router.push('/login')
     } else {
-      instance.proxy.$message({ text: res.errMsg, type: 'error' })
-      router.push('/zc')
+      instance.proxy.$message({ text: res.Msg, type: 'error' })
     }
   })
 }
-onMounted(() => {
-  if (localStorage.getItem('bstoken')) {
-    checkToken(localStorage.getItem('bstoken')).then((res) => {
-      if (res.status) {
-        instance.proxy.$message({ text: 'token校验成功', type: 'success' })
-        router.push('/detail')
-      } else {
-        instance.proxy.$message({ text: 'token已过期', type: 'error' })
-        router.push('/login')
-      }
-    })
-  } else {
-    instance.proxy.$message({ text: '未找到token', type: 'warn' })
-    router.push('/login')
-  }
-})
 </script>
 
 <style lang="scss" scoped>
-.loginContainer{
+.zcContainer{
     width: 100%;
     height: 100%;
     background-color: #fff;
-    position: relative;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // flex-direction: column;
-    p{
-      height: 20%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-size: 22px;
-      text-align: center;
-      top: 3%;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .form{
         margin: 0 auto;
         width: 60%;
         height: 50%;
         position: relative;
         text-align: center;
-        border-radius: 2%;
+        border-radius: 30px;
         border: 1px solid #808080;
         background-color: #66B1FF;
+        opacity: 0.7;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -109,6 +79,7 @@ onMounted(() => {
           color: #808080;
           font-size: 18px;
           height: 10px;
+          transition: all 0.2s ease;
         }
         label:first-of-type{
           left: 12%;
@@ -116,7 +87,7 @@ onMounted(() => {
         }
         label:last-of-type{
           left: 12%;
-          top: 54%;
+          top: 55%;
         }
         input:focus{
           border: 3px solid red;
@@ -147,18 +118,11 @@ onMounted(() => {
         input.act{
           border: 3px solid red;
         }
+        p{
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
     }
-    // span.usn{
-    //   position: absolute;
-    //   transform: translate(300px, 115px);
-    //   color: #808080;
-    //   height: 0;
-    // }
-    // span.pwd{
-    //   position: absolute;
-    //   transform: translate(300px, 160px);
-    //   color: #808080;
-    //   height: 0;
-    // }
 }
 </style>

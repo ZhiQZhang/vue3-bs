@@ -152,6 +152,8 @@ const cityDropShow = computed(() => {
             flex-direction: column;
             justify-content: center;
             height: 10%;
+            font-size: large;
+            font-weight: bold;
         }
         .active{
           background-color: #518bca;

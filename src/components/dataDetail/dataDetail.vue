@@ -66,6 +66,7 @@ let totalNum = ref(0)
 const getData = () => {
   getPageData('', pageData.value).then(res => {
     instance.proxy.$message({ text: '数据获取成功', type: 'success' })
+    cityname.value = ''
     detaildata.value = res.data
     totalNum.value = res.totalNum
     cols.value = Object.keys(detaildata.value[0])

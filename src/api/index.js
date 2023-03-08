@@ -164,3 +164,14 @@ export const getPageData = (city, pageConfig) => {
     })
   }
 }
+
+export const zcReq = (username, password) => {
+  return requests({
+    url: '/zc',
+    method: 'post',
+    data: {
+      username: username,
+      password: password
+    }
+  })
+}

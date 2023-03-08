@@ -20,6 +20,9 @@ watch(() => router.currentRoute.value.path, (toPath) => {
   if (toPath === '/login') {
     biaoqianName.value = '登录'
   }
+  if (toPath === '/zc') {
+    biaoqianName.value = '注册'
+  }
 }, { immediate: true, deep: true })
 </script>
 
@@ -37,6 +40,11 @@ watch(() => router.currentRoute.value.path, (toPath) => {
     width: 100%;
     height: 50%;
     display: flex;
+    span{
+      color: #fff;
+      font-size: large;
+      font-weight: bold;
+    }
   }
 }
 </style>

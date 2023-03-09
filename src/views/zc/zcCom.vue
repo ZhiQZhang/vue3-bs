@@ -39,6 +39,8 @@ const zc = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url('@/assets/infinity-26911168.jpg') no-repeat center;
+    background-size: cover;
     .form{
         margin: 0 auto;
         width: 60%;
@@ -53,6 +55,7 @@ const zc = () => {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        backdrop-filter: blur(2px);
         input{
             width: 80%;
             height: 12%;
@@ -66,9 +69,13 @@ const zc = () => {
             width: 40%;
             height: 13%;
             border-radius: 10px;
-            border: 1px solid transparent;
+            border: 1px solid #1a7617;
             font-size: 20px;
-            color: #808080;
+            color: #fff;
+            background-color: #66B1FF;
+        }
+        button:hover, button:focus{
+          background-color: #29598e;
         }
         label{
           text-align: left;

@@ -54,12 +54,19 @@ onMounted(() => {
 .loginContainer{
     width: 100%;
     height: 100%;
-    background-color: #fff;
     position: relative;
+    background: url('@/assets/infinity-3349550.jpg') no-repeat;
+    background-size: cover;
     // display: flex;
     // justify-content: center;
     // align-items: center;
     // flex-direction: column;
+    &>p{
+      width: 20%;
+      border-radius: 10px;
+      margin: 0 auto;
+      backdrop-filter: blur(2px);
+    }
     p{
       height: 20%;
       display: flex;
@@ -76,13 +83,14 @@ onMounted(() => {
         height: 50%;
         position: relative;
         text-align: center;
-        border-radius: 2%;
+        border-radius: 20px;
         border: 1px solid #808080;
         background-color: #66B1FF;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        opacity: 0.9;
         input{
             width: 80%;
             height: 12%;
@@ -96,9 +104,13 @@ onMounted(() => {
             width: 40%;
             height: 13%;
             border-radius: 10px;
-            border: 1px solid transparent;
+            border: 2px solid #1a76d7;
             font-size: 20px;
-            color: #808080;
+            color: #fff;
+            background-color: #66B1FF;
+        }
+        button:hover, button:focus{
+          background-color: #29598e;
         }
         label{
           text-align: left;
@@ -109,6 +121,7 @@ onMounted(() => {
           color: #808080;
           font-size: 18px;
           height: 10px;
+          transition: all 0.2s ease;
         }
         label:first-of-type{
           left: 12%;

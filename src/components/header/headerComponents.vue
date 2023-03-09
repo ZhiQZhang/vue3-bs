@@ -1,9 +1,10 @@
 <template>
   <div class="header_container">
-    <div class="biaoqian">
-      <span :style="{ visibility: (headerBtnShown ? 'visible' : 'hidden')}" class="iconfont icon-xiangzuo"></span>
-      <span>{{ biaoqianName }}</span>
-    </div>
+    <span>{{ biaoqianName }}</span>
+    <div>
+        <router-link class="routerTo" to="/login">登录</router-link>
+        <router-link class="routerTo" to="/zc">注册</router-link>
+      </div>
   </div>
 </template>
 
@@ -32,17 +33,33 @@ watch(() => router.currentRoute.value.path, (toPath) => {
   height: 8%;
   background-color: #66B1FF;
   color: #fff;
+  text-align: center;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-bottom: 1px solid #fff;
-  .biaoqian{
-    width: 100%;
-    height: 50%;
-    display: flex;
-    span{
-      color: #fff;
-      font-size: large;
+  align-items: center;
+  span{
+    width: 50%;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: flex-end;
+  }
+  div{
+    width: 50%;
+    display: inline-flex;
+    .routerTo:first-of-type{
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .routerTo:last-of-type{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
       font-weight: bold;
     }
   }

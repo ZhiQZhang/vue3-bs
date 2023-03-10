@@ -21,16 +21,20 @@ let usn = ref('')
 let pwd = ref('')
 const instance = getCurrentInstance()
 const login = () => {
-  loginReq(usn.value, pwd.value).then((res) => {
-    if (res.code === 200) {
-      instance.proxy.$message({ text: '登陆成功', type: 'success' })
-      localStorage.setItem('bstoken', res.token)
-      router.push('/detail')
-    } else {
-      instance.proxy.$message({ text: res.errMsg, type: 'error' })
-      router.push('/zc')
-    }
-  })
+  if (usn.value !== '' && pwd.value !== '') {
+    loginReq(usn.value, pwd.value).then((res) => {
+      if (res.code === 200) {
+        instance.proxy.$message({ text: '登陆成功', type: 'success' })
+        localStorage.setItem('bstoken', res.token)
+        router.push('/detail')
+      } else {
+        instance.proxy.$message({ text: res.errMsg, type: 'error' })
+        router.push('/zc')
+      }
+    })
+  } else {
+    instance.proxy.$message({ text: '账号密码不能为空', type: 'error' })
+  }
 }
 onMounted(() => {
   if (localStorage.getItem('bstoken')) {

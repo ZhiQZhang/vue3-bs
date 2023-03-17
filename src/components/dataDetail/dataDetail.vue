@@ -150,12 +150,17 @@ onMounted(() => {
                 border-bottom: 1px solid grey;
                 border-right: 1px solid grey;
                 font-size: 13px;
-                font-weight: 100;
+                font-weight: bolder;
+                font-family: Arial, 'Microsoft YaHei';
             }
         }
         tr:nth-child(odd){
-            background-color: #66B1FF;
-            color: #fff;
+            background-color: #b6b6b8;
+            color: #000;
+        }
+        tr:first-of-type{
+          background-color: #66B1FF;
+          color: #fff;
         }
     }
     .pagination{

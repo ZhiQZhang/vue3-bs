@@ -16,3 +16,11 @@ body{
     height: 100%;
     position: relative;
 }
+.vbtn {
+    margin-top: 30px !important;
+    border-radius: 10px !important;
+    background-color: #66B1FF !important;
+    color: #fff !important;
+    font-weight: bolder;
+    margin-left: 10px !important;
+}

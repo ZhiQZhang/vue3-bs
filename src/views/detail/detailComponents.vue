@@ -13,6 +13,7 @@
           <div class="content">
             <span class="returnHome" v-if="!homeShow" @click="returnHome">返回首页</span>
             <home-components v-show="homeShow"></home-components>
+            <!-- <city-drop-components v-show="cityDropShow"></city-drop-components> -->
             <city-drop-components v-show="cityDropShow"></city-drop-components>
             <div class="item" v-show="shownObj.price">
                 <price-charts></price-charts>
@@ -50,10 +51,11 @@ import chaoxiangCharts from '@/components/chaoxiangCharts/chaoxiangCharts.vue'
 import houseTypeCharts from '@/components/houseTypeCharts/houseTypeCharts.vue'
 import floorCharts from '@/components/floorCharts/floorCharts.vue'
 import homeComponents from '@/components/home/homeComponents.vue'
-import cityDropComponents from '@/components/cityDrop/cityDropComponents.vue'
+// import cityDropComponents from '@/components/cityDrop/cityDropComponents.vue'
 import trafficCharts from '@/components/trafficCharts/trafficCharts'
 import squareCharts from '@/components/squareCharts/squareCharts.vue'
 import dataDetail from '@/components/dataDetail/dataDetail.vue'
+import cityDropComponents from '@/components/cityDropCom/CityDropCom.vue'
 import $bus from '@/utils/bus'
 const _keys_ = {
   price: false,

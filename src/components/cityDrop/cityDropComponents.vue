@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+// 城市下拉初次制作
 import { getCityList } from '@/api'
 import { ref, getCurrentInstance } from 'vue'
 import $bus from '@/utils/bus'

@@ -2,7 +2,7 @@
   <div class="header_container">
     <span>{{ biaoqianName }}</span>
     <div>
-        <router-link class="routerTo" to="/login" v-show="$route.path === '/login'">登录</router-link>
+        <router-link class="routerTo" to="/login">登录</router-link>
         <router-link class="routerTo" to="/zc">注册</router-link>
       </div>
   </div>

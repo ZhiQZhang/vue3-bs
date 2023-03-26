@@ -2,7 +2,7 @@
  * @Author: zzq 1731492139@qq.com
  * @Date: 2023-02-28 22:59:56
  * @LastEditors: zzq 1731492139@qq.com
- * @LastEditTime: 2023-03-17 20:15:21
+ * @LastEditTime: 2023-03-26 16:26:46
  * @FilePath: \vue3-bs\src\api\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -181,5 +181,11 @@ export const zcReq = (username, password) => {
       usn: username,
       pwd: password
     }
+  })
+}
+export const radarReq = () => {
+  return requests({
+    url: '/radarData',
+    method: 'GET'
   })
 }
